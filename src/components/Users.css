@@ -5,10 +5,10 @@
 
 
 .personsimage {
-    width: 325px;
-    height: 408px;
+    height: 400px;
     position: relative;
     overflow: hidden;
+    width: 310px;
 }
 
 .name {
@@ -25,18 +25,25 @@
     padding-bottom: 5%;
 }
 
+.flex_box {
+    display: flex;
+    gap: 14vw;
+}
+
 .box {
-    display: flexbox;
+    display: flex;
     flex-direction: row;
     margin: 75px;
     margin-top: 50px;
     margin-bottom: 50px;
     box-shadow: 0 4px 8px 0 rgba(53, 53, 81, 0.937);
-    
+    width: 310px;
     border-radius: 5%;
     background-color: #2B3467;
+    gap: 20vw;
+    
 }
 
 .box:hover {
     box-shadow: 0 12px 16px 0 #EB455F;
-  }
+}
