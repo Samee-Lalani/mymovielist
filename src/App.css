@@ -2,37 +2,140 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  background-color: #FCFFE7;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.header {
+  background-color: #0B2447;
+  height: 120px;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+#title {
+  padding: 0;
+  margin-top: -45px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#sign-in {
+  background-color: #CDDEFF;
+  border: none;
+  text-align: center;
+  padding: 10px;
+  padding-left: 25px;
+  margin: 15px;
+  padding-right: 25px;
+  border-radius: 30px;
+  font-size: 17px;
+  transition: 0.3s;
+}
+
+#sign-in:hover {
+  background-color: #eaf1ff;
+  color: black;
+  box-shadow: 10px 10px;
+}
+
+#sign-in:active {
+  transform: translateY(4px);
+  box-shadow: 5px 5px;
+}
+
+h1 {
+  margin: 0;
+  padding: 25px;
+  padding-left: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 55px;
+  text-align: center;
+}
+
+.add_del_bckgrnd {
+  background-color: #EB455F;
+  height: 75px;
+}
+
+.top_buttons {
+  background-color: #CDDEFF;
+  border: none;
+  text-align: center;
+  padding: 10px;
+  padding-left: 50px;
+  padding-right: 50px;
+  border-radius: 30px;
+  font-size: 20px;
+  margin-top: 15px;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.top_buttons:hover {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 4px 7px, rgba(0, 0, 0, 0.23) 0px 4px 7px;
+  transition: 0.3s;
+}
+
+.top_buttons:active {
+  transform: translateY(2px);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 3px, rgba(0, 0, 0, 0.23) 0px 1px 3px;
+}
+
+#add {
+  float: left;
+}
+
+#delete {
+  float: right;
+}
+
+.mid_section {
+  min-height: 73.3vh;
+  padding: 0;
+}
+
+.footer {
+  background-color: #0B2447;
+  color: white;
+  height: 50px;
+}
+
+#footer-text {
+  padding-top: 15px;
+  margin: 0;
+  text-align: center;
+}
+
+/************************* Desktop 2 Log-in **************************/
+.log_in {
+  text-align: center;
+  padding-top: 25vw;
+  font-weight: lighter;
+}
+
+#username, #password {
+  background-color: #CDDEFF;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+#sign-in-button {
+  background-color: #CDDEFF;
+  border: none;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
+  border-radius: 30px;
+  font-weight: lighter;
+  font-size: 17px;
+}
+
+/**************************** Error Page *****************************/
+.error_page {
+  text-align: center;
+}
+
+#pnf {
+  padding-top: 15px;
+  color: white;
+  height: 40px;
 }
