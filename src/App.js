@@ -1,25 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import {Route, Routes} from 'react-router-dom';
+import Desktop1 from "./pages/Desktop1.js";
+import Desktop2 from './pages/Desktop2.js';
+import ErrorPage from "./pages/ErrorPage.js";
 
-function App() {
+export default function App() {
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Routes>
+        <Route path="/" element={<Desktop1 /> }  />
+        <Route path="/sign-in" element={<Desktop2 />} />
+        <Route path="/*" element={<ErrorPage />} />
+      </Routes>
     </div>
   );
 }
-
-export default App;
