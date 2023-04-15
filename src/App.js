@@ -1,3 +1,4 @@
+import './App.css';
 import React, { useState } from 'react';
 import {Route, Routes} from 'react-router-dom';
 import Desktop1 from "./pages/Desktop1.js";
@@ -16,3 +17,4 @@ export default function App() {
     </div>
   );
 }
+

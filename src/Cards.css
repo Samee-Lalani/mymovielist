@@ -1,0 +1,13 @@
+.box {
+    display: flex; 
+    margin-top: 50px;
+    margin-bottom: 50px;
+    box-shadow: 0 4px 8px 0 rgba(4, 3, 3, 0.888);
+    
+    border-radius: 10px; 
+    background-color: rgb(218, 218, 227);
+    
+}
+.box:hover {
+    box-shadow: 0 8px 16px 0 rgba(160, 15, 226, 0.959);
+  } 

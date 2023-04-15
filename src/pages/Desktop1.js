@@ -1,9 +1,32 @@
 import '../App.css';
 import {Link} from "react-router-dom";
 import React, { useState } from 'react';
+import Users from '../Users.js';
+
+const DUMMY_USERS = [
+  {
+    id: 'u1',
+    name: 'Everything Everywhere All At Once',
+    image:'https://m.media-amazon.com/images/I/A1f7vq1AwuL.jpg', 
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  }, 
+  {
+    id: 'u2',
+    name: 'Banshees of Inisherin',
+    image:'https://image.tmdb.org/t/p/original/6tgmoZtdRWerdmK1KPcdf87uZyE.jpg',
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  },
+  {
+    id: 'u3',
+    name: 'Avater: The Way of Water',
+    image:'https://media.wdwnt.com/2022/11/avatar-the-way-of-water-poster-960x1200.jpg',
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  }
+]
+
 
 export default function Desktop1() {
-  const[loginstatus,setLogin] = useState(0);
+  
   return (
     <div className="desktop1">
       {/***** Header *****/}
@@ -19,15 +42,12 @@ export default function Desktop1() {
         <button type="button" id="add" className="top_buttons">Add</button>
         <button type="button" id="delete" className="top_buttons">Delete</button>
       </div>
-
+      
       {/***** Cards *****/}
       <div className="mid_section">
-        <button onClick={
-          ()=>{
-            setLogin(1)
-          }
-        }/>
-        <p>{loginstatus}</p>
+        <div className="container">
+        <Users user_list={DUMMY_USERS} />
+        </div>
       </div>
 
       {/***** Footer *****/}
