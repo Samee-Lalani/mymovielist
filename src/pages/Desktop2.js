@@ -1,7 +1,7 @@
 import '../App.css';
 import {Link} from "react-router-dom";
 
-export default function Desktop2() {
+export default function Desktop2({handleSignIn}) {
   return (
     <div className="desktop2">
       {/***** Header *****/}
@@ -21,8 +21,8 @@ export default function Desktop2() {
           <label for="password">Password: </label>
           <input type="text" id="password" name="password"></input>
           <br /><br />
-          <Link to="/logged-in">
-            <input type="submit" value="Sign-in" id="sign-in-button" />
+          <Link to="/" onClick={handleSignIn}>
+            <input type="submit" value="Sign-in" id="sign-in-button"/>
           </Link>
         </form>
       </div>
