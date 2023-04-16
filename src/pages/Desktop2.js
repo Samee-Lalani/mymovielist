@@ -21,7 +21,7 @@ export default function Desktop2() {
           <label for="password">Password: </label>
           <input type="text" id="password" name="password"></input>
           <br /><br />
-          <Link to="/">
+          <Link to="/logged-in">
             <input type="submit" value="Sign-in" id="sign-in-button" />
           </Link>
         </form>
