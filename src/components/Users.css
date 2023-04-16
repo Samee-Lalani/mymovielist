@@ -28,6 +28,7 @@
 .flex_box {
     display: flex;
     gap: 14vw;
+    flex-wrap: wrap;
 }
 
 .box {
@@ -40,8 +41,6 @@
     width: 310px;
     border-radius: 5%;
     background-color: #2B3467;
-    gap: 20vw;
-    
 }
 
 .box:hover {
