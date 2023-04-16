@@ -1,7 +1,6 @@
 import '../App.css';
 import {Link} from "react-router-dom";
-import React, { useState } from 'react';
-import Users from '../components/Users.js';
+import Users from '../components/Users';
 
 const DUMMY_USERS = [
   {
@@ -24,29 +23,32 @@ const DUMMY_USERS = [
   }
 ]
 
+function showAlert() { 
+  window.alert("Not logged in!");
+}
 
 export default function Desktop1() {
-  
+
   return (
     <div className="desktop1">
       {/***** Header *****/}
       <header className="header">
         <Link to="/sign-in">
-          <button type="button" id="sign-in"  >Sign-in</button>
+          <button type="button" id="sign-in">Sign-in</button>
         </Link>
         <h1 id="title">MyMovieList</h1>
       </header>
 
       {/***** Add and Delete Buttons *****/}
       <div className="add_del_bckgrnd">
-        <button type="button" id="add" className="top_buttons">Add</button>
-        <button type="button" id="delete" className="top_buttons">Delete</button>
+        <button type="button" id="add" className="top_buttons" onClick={showAlert}>Add</button>
+        <button type="button" id="delete" className="top_buttons" onClick={showAlert}>Delete</button>
       </div>
-      
+
       {/***** Cards *****/}
       <div className="mid_section">
         <div className="container">
-        <Users user_list={DUMMY_USERS} />
+          <Users user_list={DUMMY_USERS} />
         </div>
       </div>
 
