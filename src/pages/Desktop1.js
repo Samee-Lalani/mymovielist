@@ -2,7 +2,6 @@ import '../App.css';
 import React, { useState } from 'react';
 import {Link} from "react-router-dom";
 import Users from '../components/Users';
-import PopUpForm from '../components/PopUpForm';
 
 
 
@@ -32,12 +31,25 @@ function showAlert() {
   window.alert("Not logged in!");
 }
 
-export default function Desktop1({isLoggedIn, handleSignOut}) {
+export default function Desktop1({isLoggedIn, handleSignOut, props}) {
+  const [title, setTitle] = useState('');
+  const [image, setImage] = useState('');
+  const [description, setDescription] = useState('');
+
+
   const [showForm, setShowForm] = useState(false);
 
-  const toggleForm = (value) => setShowForm(value);
+ 
 
-
+  function hide() {
+    document.getElementById('additiondiv').style.display = 'none';
+  }
+  setTimeout(() => {
+    hide()
+  }, "100");
+  function show() {
+    document.getElementById('additiondiv').style.display = 'inline';
+  }
   return (
     <div className="desktop1">
       {/***** Header *****/}
@@ -57,14 +69,33 @@ export default function Desktop1({isLoggedIn, handleSignOut}) {
         )}
 
         <h1 id="title">MyMovieList</h1>
+
+  <div id="additiondiv">
+        
+          <label>
+            Title:
+            <input type="text" value={title} onChange={(event) => setTitle(event.target.value)} />
+          </label>
+          <label>
+            Image URL:
+            <input type="text" value={image} onChange={(event) => setImage(event.target.value)} />
+          </label>
+          <label>
+            Description:
+            <textarea value={description} onChange={(event) => setDescription(event.target.value)} />
+          </label>
+          <Link to="/" onClick={hide}>
+            <button type="submit">Add</button>
+          </Link>
+          </div>
       </header>
 
       {/***** Add and Delete Buttons *****/}
       <div className="add_del_bckgrnd">
         {isLoggedIn ? (
           <div>
-            <button type="button" id="add" className="top_buttons" onClick={() => setShowForm(!showForm)}>Add</button>
-            {showForm && <PopUpForm toggleForm={() => setShowForm(false)} />}
+            <button type="button" id="add" className="top_buttons" onClick={show}>Add</button>
+            
             <button type="button" id="delete" className="top_buttons">Delete</button>
           </div>
         ) : (
