@@ -1,6 +1,11 @@
 import '../App.css';
+import React, { useState } from 'react';
 import {Link} from "react-router-dom";
 import Users from '../components/Users';
+import PopUpForm from '../components/PopUpForm';
+
+
+
 
 const DUMMY_USERS = [
   {
@@ -28,6 +33,10 @@ function showAlert() {
 }
 
 export default function Desktop1({isLoggedIn, handleSignOut}) {
+  const [showForm, setShowForm] = useState(false);
+
+  const toggleForm = (value) => setShowForm(value);
+
 
   return (
     <div className="desktop1">
@@ -54,7 +63,8 @@ export default function Desktop1({isLoggedIn, handleSignOut}) {
       <div className="add_del_bckgrnd">
         {isLoggedIn ? (
           <div>
-            <button type="button" id="add" className="top_buttons">Add</button>
+            <button type="button" id="add" className="top_buttons" onClick={() => setShowForm(!showForm)}>Add</button>
+            {showForm && <PopUpForm toggleForm={() => setShowForm(false)} />}
             <button type="button" id="delete" className="top_buttons">Delete</button>
           </div>
         ) : (
