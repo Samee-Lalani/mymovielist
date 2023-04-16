@@ -27,22 +27,42 @@ function showAlert() {
   window.alert("Not logged in!");
 }
 
-export default function Desktop1() {
+export default function Desktop1({isLoggedIn, handleSignOut}) {
 
   return (
     <div className="desktop1">
       {/***** Header *****/}
       <header className="header">
-        <Link to="/sign-in">
-          <button type="button" id="sign-in">Sign-in</button>
-        </Link>
+        {isLoggedIn ? (
+          <div>
+            <Link to="/signed-out">
+              <button type="button" id="sign-out" onClick={handleSignOut}>Sign-out</button>
+            </Link>
+          </div>
+        ) : (
+          <div>
+            <Link to="/sign-in">
+              <button type="button" id="sign-in">Sign-in</button>
+            </Link>
+          </div>
+        )}
+
         <h1 id="title">MyMovieList</h1>
       </header>
 
       {/***** Add and Delete Buttons *****/}
       <div className="add_del_bckgrnd">
-        <button type="button" id="add" className="top_buttons" onClick={showAlert}>Add</button>
-        <button type="button" id="delete" className="top_buttons" onClick={showAlert}>Delete</button>
+        {isLoggedIn ? (
+          <div>
+            <button type="button" id="add" className="top_buttons">Add</button>
+            <button type="button" id="delete" className="top_buttons">Delete</button>
+          </div>
+        ) : (
+          <div>
+          <button type="button" id="add" className="top_buttons" onClick={showAlert}>Add</button>
+          <button type="button" id="delete" className="top_buttons" onClick={showAlert}>Delete</button>
+          </div>
+        )}
       </div>
 
       {/***** Cards *****/}
