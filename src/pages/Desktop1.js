@@ -1,10 +1,7 @@
 import '../App.css';
-import React, { useState } from 'react';
 import {Link} from "react-router-dom";
-import Users from '../components/Users';
-
-
-
+import Cards from '../components/Cards';
+import { useState } from 'react';
 
 const DUMMY_USERS = [
   {
@@ -32,14 +29,22 @@ function showAlert() {
 }
 
 export default function Desktop1({isLoggedIn, handleSignOut, props}) {
+
   const [title, setTitle] = useState('');
   const [image, setImage] = useState('');
   const [description, setDescription] = useState('');
 
+  const [cards, setCards] = useState(DUMMY_USERS);
 
-  const [showForm, setShowForm] = useState(false);
-
- 
+  function updateCardName(cardId, newName) {
+    setCards(cards.map(card => {
+      if (card.id === cardId) {
+        return { ...card, name: newName};
+      } else {
+        return card;
+      }
+    }));
+  }
 
   function hide() {
     document.getElementById('additiondiv').style.display = 'none';
@@ -50,6 +55,7 @@ export default function Desktop1({isLoggedIn, handleSignOut, props}) {
   function show() {
     document.getElementById('additiondiv').style.display = 'inline';
   }
+
   return (
     <div className="desktop1">
       {/***** Header *****/}
@@ -67,10 +73,9 @@ export default function Desktop1({isLoggedIn, handleSignOut, props}) {
             </Link>
           </div>
         )}
-
         <h1 id="title">MyMovieList</h1>
 
-  <div id="additiondiv">
+      <div id="additiondiv">
         
           <label>
             Title:
@@ -95,7 +100,6 @@ export default function Desktop1({isLoggedIn, handleSignOut, props}) {
         {isLoggedIn ? (
           <div>
             <button type="button" id="add" className="top_buttons" onClick={show}>Add</button>
-            
             <button type="button" id="delete" className="top_buttons">Delete</button>
           </div>
         ) : (
@@ -109,7 +113,10 @@ export default function Desktop1({isLoggedIn, handleSignOut, props}) {
       {/***** Cards *****/}
       <div className="mid_section">
         <div className="container">
-          <Users user_list={DUMMY_USERS} />
+          {DUMMY_USERS.map((card) => (
+            <Cards id={card.id} name={card.name} image={card.image} isLoggedIn={isLoggedIn} description={card.description} updateCardName={updateCardName} />
+          ))}
+            
         </div>
       </div>
 
