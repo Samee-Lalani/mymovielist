@@ -1,7 +1,9 @@
 import '../App.css';
 import {Link} from "react-router-dom";
+import {useState} from 'react';
+
 import Cards from '../components/Cards';
-import { useState } from 'react';
+import ModalBox from "../components/ModalBox";
 
 const DUMMY_USERS = [
   {
@@ -28,37 +30,34 @@ function showAlert() {
   window.alert("Not logged in!");
 }
 
-export default function Desktop1({isLoggedIn, handleSignOut, props}) {
+export default function Desktop1({isLoggedIn, handleSignOut}) {
 
-  const [title, setTitle] = useState('');
-  const [image, setImage] = useState('');
-  const [description, setDescription] = useState('');
+  /************************ ADD CARD *************************/
+  const [visible, setVisible] = useState(false);
+  
+  function addCard() {
+    setVisible(true);
+  }
 
+  /************************ DELETE CARD ***********************/
   const [cards, setCards] = useState(DUMMY_USERS);
 
-  function updateCardName(cardId, newName) {
-    setCards(cards.map(card => {
-      if (card.id === cardId) {
-        return { ...card, name: newName};
-      } else {
-        return card;
-      }
-    }));
+  function handleRemove(id) {
+    const newCards = cards.filter((item) => item.id !== id);
+    setCards(newCards);
   }
 
-  function hide() {
-    document.getElementById('additiondiv').style.display = 'none';
-  }
-  setTimeout(() => {
-    hide()
-  }, "100");
-  function show() {
-    document.getElementById('additiondiv').style.display = 'inline';
+  /************************ EDIT CARD **************************/
+  /** shows edit form **/
+  const [popup, setPopup] = useState(false);
+
+  function handlePopup() {
+    setPopup(true);
   }
 
   return (
     <div className="desktop1">
-      {/***** Header *****/}
+      {/******************** Header **********************/}
       <header className="header">
         {isLoggedIn ? (
           <div>
@@ -75,52 +74,55 @@ export default function Desktop1({isLoggedIn, handleSignOut, props}) {
         )}
         <h1 id="title">MyMovieList</h1>
 
-      <div id="additiondiv">
-        
-          <label>
-            Title:
-            <input type="text" value={title} onChange={(event) => setTitle(event.target.value)} />
-          </label>
-          <label>
-            Image URL:
-            <input type="text" value={image} onChange={(event) => setImage(event.target.value)} />
-          </label>
-          <label>
-            Description:
-            <textarea value={description} onChange={(event) => setDescription(event.target.value)} />
-          </label>
-          <Link to="/" onClick={hide}>
-            <button type="submit">Add</button>
-          </Link>
-          </div>
       </header>
 
-      {/***** Add and Delete Buttons *****/}
-      <div className="add_del_bckgrnd">
+      {/****************** Add Button ********************/}
+      <div className="add_bckgrnd">
         {isLoggedIn ? (
           <div>
-            <button type="button" id="add" className="top_buttons" onClick={show}>Add</button>
-            <button type="button" id="delete" className="top_buttons">Delete</button>
+            <button type="button" id="top_button" onClick={() => addCard()}>Add</button>
+            {visible ? (
+              <>
+                <ModalBox />
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         ) : (
           <div>
-          <button type="button" id="add" className="top_buttons" onClick={showAlert}>Add</button>
-          <button type="button" id="delete" className="top_buttons" onClick={showAlert}>Delete</button>
+            <button type="button" id="top_button" onClick={showAlert}>Add</button>
           </div>
         )}
       </div>
 
-      {/***** Cards *****/}
+      {/***************************** Cards **************************/}
       <div className="mid_section">
-        <div className="container">
-          {DUMMY_USERS.map((card) => (
-            <Cards id={card.id} name={card.name} image={card.image} isLoggedIn={isLoggedIn} description={card.description} updateCardName={updateCardName} />
-          ))}
-            
-        </div>
+        <ul id="myUL">
+          {cards.map((card, index) => (
+              <li id={card.id}>
+                <Cards name={card.name} image={card.image} isLoggedIn={isLoggedIn} description={card.description} />
+                {isLoggedIn ? (
+                  <div id="editNDelete">
+                    <button type="button" className="editButton" onClick={() => handlePopup()}>Edit</button>
+                    {popup ? (
+                      <>
+                        <ModalBox />
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                    <button type="button" id="deleteButton" onClick={() => handleRemove(card.id)}>Delete</button>
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </li>
+          ))} 
+          </ul>
       </div>
 
-      {/***** Footer *****/}
+      {/******************************* Footer **********************/}
       <footer className="footer">
         <p id="footer-text">Raegan Girdley • Samee Lalani • Matthew Chambers</p>
       </footer>
