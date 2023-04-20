@@ -53,6 +53,9 @@ export default function Desktop1({isLoggedIn, handleSignOut}) {
       description: desc,
     });
     setCards(newList);
+    setName('');
+    setImg('');
+    setDesc('');
   }
 
   /************************ DELETE CARD ***********************/
