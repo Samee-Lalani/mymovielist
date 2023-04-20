@@ -1,9 +1,9 @@
 import '../App.css';
+import '../components/ModalBox.css';
 import {Link} from "react-router-dom";
 import {useState} from 'react';
 
 import Cards from '../components/Cards';
-import ModalBox from "../components/ModalBox";
 
 const DUMMY_USERS = [
   {
@@ -26,17 +26,33 @@ const DUMMY_USERS = [
   }
 ]
 
-function showAlert() { 
-  window.alert("Not logged in!");
-}
 
 export default function Desktop1({isLoggedIn, handleSignOut}) {
 
+  function showAlert() { 
+    window.alert("Not logged in!");
+  }
+
   /************************ ADD CARD *************************/
   const [visible, setVisible] = useState(false);
-  
-  function addCard() {
-    setVisible(true);
+
+  function openModal() {
+    setVisible(!visible);
+  }
+
+  function closeModal() {
+    setVisible(!visible);
+  }
+
+  function handleAdd() {
+    const addId = cards.length+1;
+    const newList = cards.concat({
+      id: 'u' + addId,
+      name: name,
+      image: img,
+      description: desc,
+    });
+    setCards(newList);
   }
 
   /************************ DELETE CARD ***********************/
@@ -52,7 +68,35 @@ export default function Desktop1({isLoggedIn, handleSignOut}) {
   const [popup, setPopup] = useState(false);
 
   function handlePopup() {
-    setPopup(true);
+    setPopup(!popup);
+  }
+
+  function closePopup() {
+    setPopup(!popup);
+  }
+
+  const [name, setName] = useState('');
+  const [img, setImg] = useState('');
+  const [desc, setDesc] = useState('');
+  const [tempId, setTempId] = useState('');
+
+  function handleEdit(id) {
+    const newList = cards.map((item) => {
+      if (item.id === id) {
+        const updatedItem = {
+          ...item,
+          name: name,
+          image: img,
+          description: desc,
+        };
+        return updatedItem;
+      }
+      return item;
+    });
+    setCards(newList);
+    setName('');
+    setImg('');
+    setDesc('');
   }
 
   return (
@@ -73,20 +117,39 @@ export default function Desktop1({isLoggedIn, handleSignOut}) {
           </div>
         )}
         <h1 id="title">MyMovieList</h1>
-
       </header>
 
       {/****************** Add Button ********************/}
       <div className="add_bckgrnd">
         {isLoggedIn ? (
           <div>
-            <button type="button" id="top_button" onClick={() => addCard()}>Add</button>
-            {visible ? (
+            <button type="button" id="top_button" onClick={() => openModal()}>Add</button>
+            {visible && (
               <>
-                <ModalBox />
+                <div id="modalBox" class="modal">
+                  <div class="modal-content">
+                    <button class="close" onClick={() => closeModal()}>&times;</button>
+                    <h2>Add Movie</h2>
+                    <hr /><br />
+                    <form onSubmit={e => {
+                      e.preventDefault();
+                      handleAdd();
+                      closeModal();
+                      }}>
+                      <label for="newTitle">Title: </label>
+                      <input type="text" name="newTitle" onChange={e => setName(e.target.value)} />
+                      <br /><br />
+                      <label for="newImg">Image: </label>
+                      <input type="text" name="newImg" onChange={e => setImg(e.target.value)} />
+                      <br /><br />
+                      <label for="newDesc">Description: </label>
+                      <input type="text" name="newDesc" onChange={e => setDesc(e.target.value)} />
+                      <br /><br />
+                      <button type="submit" >Submit</button>
+                    </form>
+                  </div>
+                </div>
               </>
-            ) : (
-              <></>
             )}
           </div>
         ) : (
@@ -101,16 +164,39 @@ export default function Desktop1({isLoggedIn, handleSignOut}) {
         <ul id="myUL">
           {cards.map((card, index) => (
               <li id={card.id}>
-                <Cards name={card.name} image={card.image} isLoggedIn={isLoggedIn} description={card.description} />
+                <Cards name={card.name} image={card.image} description={card.description} />
                 {isLoggedIn ? (
                   <div id="editNDelete">
-                    <button type="button" className="editButton" onClick={() => handlePopup()}>Edit</button>
-                    {popup ? (
+                    <button type="button" id={index} className="editButton" onClick={() => {
+                      handlePopup();
+                      setTempId(card.id);
+                    }}>Edit</button>
+                    {popup && (
                       <>
-                        <ModalBox />
+                        <div id="modalBox" class="modal">
+                          <div class="modal-content">
+                            <button class="close" onClick={() => closePopup()}>&times;</button>
+                            <h2>Edit Movie</h2>
+                            <hr /><br />
+                            <form onSubmit={(e) => {
+                              e.preventDefault();
+                              handleEdit(tempId);
+                              closePopup();
+                              }}>
+                                <label for="newTitle">Title: </label>
+                                <input type="text" name="newTitle" onChange={e => setName(e.target.value)} />
+                                <br /><br />
+                                <label for="newImg">Image: </label>
+                                <input type="text" name="newImg" onChange={e => setImg(e.target.value)} />
+                                <br /><br />
+                                <label for="newDesc">Description: </label>
+                                <input type="text" name="newDesc" onChange={e => setDesc(e.target.value)} /> 
+                                <br /><br />
+                                <button type="submit" >Submit</button>
+                            </form>
+                          </div>
+                        </div>
                       </>
-                    ) : (
-                      <></>
                     )}
                     <button type="button" id="deleteButton" onClick={() => handleRemove(card.id)}>Delete</button>
                   </div>
