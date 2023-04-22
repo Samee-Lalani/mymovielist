@@ -1,11 +1,12 @@
 import '../App.css';
 import '../components/ModalBox.css';
 import {Link} from "react-router-dom";
-import {useState} from 'react';
-
+import {useEffect, useState} from 'react';
+import {addMovie,getMovies} from '../lib/api';
 import Cards from '../components/Cards';
+import { deleteMovie } from '../lib/api';
 
-const DUMMY_USERS = [
+/***const DUMMY_USERS = [
   {
     id: 'u1',
     name: 'Everything Everywhere All At Once',
@@ -25,9 +26,18 @@ const DUMMY_USERS = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   }
 ]
+***/
 
 
 export default function Desktop1({isLoggedIn, handleSignOut}) {
+
+  useEffect(() => {
+    getMovies().then((data) => {
+      setCards(data);
+    });
+  }, []);
+
+
 
   function showAlert() { 
     window.alert("Not logged in!");
@@ -45,25 +55,37 @@ export default function Desktop1({isLoggedIn, handleSignOut}) {
   }
 
   function handleAdd() {
-    const addId = cards.length+1;
-    const newList = cards.concat({
-      id: 'u' + addId,
+    const newMovie = {
       name: name,
       image: img,
       description: desc,
+    };
+
+    addMovie(newMovie)
+    .then((data) => {
+      console.log(data);
+      newMovie.id = data;
+      setCards((prevCards) => {
+        return [newMovie,...prevCards];
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-    setCards(newList);
+
     setName('');
     setImg('');
     setDesc('');
   }
 
   /************************ DELETE CARD ***********************/
-  const [cards, setCards] = useState(DUMMY_USERS);
+  const [cards, setCards] = useState([]);
 
   function handleRemove(id) {
-    const newCards = cards.filter((item) => item.id !== id);
-    setCards(newCards);
+    deleteMovie(id)
+    .then( () => 
+    setCards((prevCards) => prevCards.filter(m => m.id !== id))
+    );
   }
 
   /************************ EDIT CARD **************************/
