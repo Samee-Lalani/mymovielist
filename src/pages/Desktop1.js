@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {useEffect, useState} from 'react';
 import {addMovie,getMovies} from '../lib/api';
 import Cards from '../components/Cards';
-import { deleteMovie } from '../lib/api';
+import { deleteMovie,updateMovie } from '../lib/api';
 
 /***const DUMMY_USERS = [
   {
@@ -106,6 +106,28 @@ export default function Desktop1({isLoggedIn, handleSignOut}) {
   const [tempId, setTempId] = useState('');
 
   function handleEdit(id) {
+
+    //edit the card in the backend database by using the id
+
+    const uMovie = {
+      name: name,
+      image: img,
+      description: desc,
+    };
+
+    updateMovie(id, uMovie)
+    .then((data) => {
+      console.log(data);
+      uMovie.id = data;
+      setCards((prevCards) => {
+        return [uMovie,...prevCards.filter(m => m.id !== id)];
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+    //then update the card in the frontend by using the id
     const newList = cards.map((item) => {
       if (item.id === id) {
         const updatedItem = {
@@ -118,6 +140,7 @@ export default function Desktop1({isLoggedIn, handleSignOut}) {
       }
       return item;
     });
+    
     setCards(newList);
     setName('');
     setImg('');
