@@ -2,6 +2,9 @@ import '../App.css';
 import {Link} from "react-router-dom";
 
 export default function Desktop2({handleSignIn}) {
+  
+  const [login, setLogin] = useState(true);
+  
   return (
     <div className="desktop2">
       {/***** Header *****/}
@@ -12,6 +15,7 @@ export default function Desktop2({handleSignIn}) {
       {/***** Add and Delete Buttons *****/}
       <div className="add_del_bckgrnd" />
 
+
       {/***** Middle Section *****/}
       <div className="mid_section">
         <form className="log_in">
@@ -21,11 +25,31 @@ export default function Desktop2({handleSignIn}) {
           <label for="password">Password: </label>
           <input type="text" id="password" name="password"></input>
           <br /><br />
-          <Link to="/" onClick={handleSignIn}>
-            <input type="submit" value="Sign-in" id="sign-in-button"/>
-          </Link>
+          {login ? (
+            <Link to="/" onClick={handleSignIn}>
+              <button type="submit" value="Sign-in" class="d2-buttons" id="sign-in-button">Sign-in</button>
+            </Link>
+          ) : (
+            <Link to="/">
+              <button type="submit" value="Sign-up" class="d2-buttons" id="sign-up-button">Sign-up</button>
+            </Link>
+          )}
+          
         </form>
       </div>
+
+      {/******** Sign-up *********/}
+      {login ? (
+        <div style={{ textAlign: "center", marginBottom: "15px" }}>
+          <p>Need an account?</p>
+          <button class="d2-buttons" onClick={() => setLogin(false)}>Sign-up</button>
+        </div>
+      ) : (
+        <div style={{ textAlign: "center", marginBottom: "15px" }}>
+          <p>Already have an account?</p>
+          <button class="d2-buttons" onClick={() => setLogin(true)}>Sign-in</button>
+        </div>
+      )}
 
       {/***** Footer *****/}
       <footer className="footer">
