@@ -1,5 +1,6 @@
 import '../App.css';
 import {Link} from "react-router-dom";
+import {useState} from 'react';
 
 export default function Desktop2({handleSignIn}) {
   
@@ -23,7 +24,7 @@ export default function Desktop2({handleSignIn}) {
           <input type="text" id="username" name="username"></input>
           <br /><br />
           <label for="password">Password: </label>
-          <input type="text" id="password" name="password"></input>
+          <input type="password" id="password" name="password"></input>
           <br /><br />
           {login ? (
             <Link to="/" onClick={handleSignIn}>
